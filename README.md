@@ -80,28 +80,22 @@ The finished project will include:
 
 ## Current status
 
-**Step 5 — agent runtime and approval system complete.**
+**Step 6 — interactive frontend integration complete.**
 
 Validated locally:
 - Next.js lint: passed
 - Next.js production build: passed
 - Production npm audit: 0 vulnerabilities
 - FastAPI test suite: 15 passed
-- Tenant-isolated retrieval: tested
-- Citation generation: tested
-- Demo retrieval evaluation hit-rate@2: 100%
-- Agent tool-selection evaluation: 100%
-- Write actions blocked until approval: tested
-- Approved write action execution: tested
+- Browser integration: passed
+- API health indicator: live
+- RAG evaluation card: live at 100%
+- Agent routing card: live at 100%
+- Knowledge search: verified in browser
+- Agent execution trace: verified in browser
+- Write action approval gate: verified in browser
+- Approved action completion: verified in browser
 
-Agent APIs:
-- GET /api/v1/agents/tools
-- POST /api/v1/agents/run
-- GET /api/v1/agents/runs
-- GET /api/v1/agents/runs/{run_id}
-- POST /api/v1/agents/runs/{run_id}/approve/{step_id}
-- GET /api/v1/evaluation/agents
+The dashboard now uses the real backend APIs for RAG, agent runs, approval flow, source listing, and evaluation metrics.
 
-The agent tool registry exposes MCP-style metadata including tool name, description, JSON input schema, and permission level.
-
-Next: Step 6 — connect the frontend to the live RAG and agent APIs, add streaming-style interaction, trace views, approvals, and evaluation dashboards.
+Next: Step 7 — browser voice interaction, stronger production-readiness features, and deployment preparation.

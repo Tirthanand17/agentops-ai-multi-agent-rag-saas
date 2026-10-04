@@ -135,4 +135,28 @@ class AgentRuntime:
                 )
 
         last = completed[-1]
-        return f"Agent completed {len(completed)} tool step(s). Last result: {last.result}"
+
+        if last.tool_name == "create_ticket" and isinstance(last.result, dict):
+            return (
+                f"Support ticket {last.result['ticket_id']} was created for "
+                f"{last.result['customer_name']} with {last.result['priority']} priority "
+                "after human approval."
+            )
+
+        if last.tool_name == "order_lookup" and isinstance(last.result, dict):
+            if last.result.get("found", True):
+                return (
+                    f"Order {last.result['order_id']} is {last.result['status']} "
+                    f"with {last.result['shipping_method']} shipping."
+                )
+
+        if last.tool_name == "knowledge_search" and isinstance(last.result, dict):
+            hits = last.result.get("hits", [])
+            if hits:
+                top = hits[0]
+                return (
+                    f"Top grounded evidence came from {top['source_name']}: "
+                    f"{top['text']}"
+                )
+
+        return f"Agent completed {len(completed)} tool step(s) successfully."

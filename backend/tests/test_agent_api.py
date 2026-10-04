@@ -38,6 +38,7 @@ def test_agent_api_requires_and_accepts_approval() -> None:
     updated = approved.json()
     assert updated["status"] == "completed"
     assert updated["trace"][-1]["result"]["status"] == "created-demo"
+    assert "after human approval" in updated["final_response"]
 
 
 def test_agent_evaluation_endpoint_passes() -> None:
