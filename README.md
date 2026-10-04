@@ -80,4 +80,12 @@ The finished project will include:
 
 ## Current status
 
-Step 2 — architecture and repository setup.
+**Step 3 — full-stack foundation complete.**
+
+Validated locally:
+- Next.js lint: passed
+- Next.js production build: passed
+- Production npm audit: 0 vulnerabilities
+- FastAPI tests: 3 passed
+
+Next: Step 4 — knowledge base, RAG ingestion, embeddings, vector search, citations, and retrieval evaluation.
