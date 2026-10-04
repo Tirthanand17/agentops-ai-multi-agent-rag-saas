@@ -1,0 +1,2 @@
+sentence-transformers>=5,<6
+torch>=2.7,<3

@@ -80,12 +80,24 @@ The finished project will include:
 
 ## Current status
 
-**Step 3 — full-stack foundation complete.**
+**Step 4 — knowledge base / RAG complete.**
 
 Validated locally:
 - Next.js lint: passed
 - Next.js production build: passed
 - Production npm audit: 0 vulnerabilities
-- FastAPI tests: 3 passed
+- FastAPI test suite: 7 passed
+- Tenant-isolated retrieval: tested
+- Citation generation: tested
+- Demo retrieval evaluation hit-rate@2: 100%
 
-Next: Step 4 — knowledge base, RAG ingestion, embeddings, vector search, citations, and retrieval evaluation.
+Knowledge APIs:
+- POST /api/v1/knowledge/ingest
+- GET /api/v1/knowledge/{workspace_id}/sources
+- POST /api/v1/knowledge/search
+- POST /api/v1/knowledge/ask
+- GET /api/v1/evaluation/rag
+
+The local demo uses deterministic hashing embeddings so tests require no paid AI key. An optional sentence-transformer backend is included for neural semantic embeddings.
+
+Next: Step 5 — agent runtime, structured tools, MCP-style registry, execution traces, and approval gates.
