@@ -3,10 +3,9 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from ..rag.demo import create_demo_rag_service
+from ..state import rag_service
 
 router = APIRouter(prefix="/knowledge", tags=["knowledge"])
-rag_service = create_demo_rag_service()
 
 
 class IngestRequest(BaseModel):

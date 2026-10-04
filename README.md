@@ -80,24 +80,28 @@ The finished project will include:
 
 ## Current status
 
-**Step 4 — knowledge base / RAG complete.**
+**Step 5 — agent runtime and approval system complete.**
 
 Validated locally:
 - Next.js lint: passed
 - Next.js production build: passed
 - Production npm audit: 0 vulnerabilities
-- FastAPI test suite: 7 passed
+- FastAPI test suite: 15 passed
 - Tenant-isolated retrieval: tested
 - Citation generation: tested
 - Demo retrieval evaluation hit-rate@2: 100%
+- Agent tool-selection evaluation: 100%
+- Write actions blocked until approval: tested
+- Approved write action execution: tested
 
-Knowledge APIs:
-- POST /api/v1/knowledge/ingest
-- GET /api/v1/knowledge/{workspace_id}/sources
-- POST /api/v1/knowledge/search
-- POST /api/v1/knowledge/ask
-- GET /api/v1/evaluation/rag
+Agent APIs:
+- GET /api/v1/agents/tools
+- POST /api/v1/agents/run
+- GET /api/v1/agents/runs
+- GET /api/v1/agents/runs/{run_id}
+- POST /api/v1/agents/runs/{run_id}/approve/{step_id}
+- GET /api/v1/evaluation/agents
 
-The local demo uses deterministic hashing embeddings so tests require no paid AI key. An optional sentence-transformer backend is included for neural semantic embeddings.
+The agent tool registry exposes MCP-style metadata including tool name, description, JSON input schema, and permission level.
 
-Next: Step 5 — agent runtime, structured tools, MCP-style registry, execution traces, and approval gates.
+Next: Step 6 — connect the frontend to the live RAG and agent APIs, add streaming-style interaction, trace views, approvals, and evaluation dashboards.
