@@ -72,20 +72,35 @@ Production persistence/authentication are deliberately documented as the next ha
 
 ## Portfolio outcome
 
-The finished project will include:
-1. public GitHub repository
-2. live deployed web app
-3. seeded demo workspace with synthetic data
-4. architecture documentation
-5. automated tests and CI
-6. screenshots
-7. short walkthrough video
-8. natural-tone narration/audio
-9. polished Upwork portfolio entry
+Completed:
+- [x] public GitHub repository
+- [x] live deployed web app
+- [x] seeded demo workspace with synthetic data
+- [x] architecture documentation
+- [x] automated tests and CI definition
+- [x] polished live-product screenshots
+
+Remaining:
+- [ ] recruiter-friendly architecture visual
+- [ ] short walkthrough video
+- [ ] natural-tone narration/audio
+- [ ] final Upwork portfolio publishing
+
+## Live product evidence
+
+![AgentOps AI live RAG dashboard](portfolio/screenshots/01-live-rag-dashboard.png)
+
+| Multi-agent execution trace | Human approval gate |
+| --- | --- |
+| ![Live agent trace](portfolio/screenshots/02-live-agent-trace.png) | ![Live approval gate](portfolio/screenshots/03-live-approval-gate.png) |
+
+Additional approved-action evidence is available in `portfolio/screenshots/04-live-approved-action.png`.
+
+Portfolio copy and the video storyboard are stored in the `portfolio/` directory.
 
 ## Current status
 
-**Step 8 — public Render deployment complete and live smoke-tested.**
+**Step 9 — portfolio packaging in progress; deployment remains live and smoke-tested.**
 
 Live demo:
 - Frontend: https://agentops-ai-demo-tirthanand17.onrender.com
@@ -114,4 +129,4 @@ Validated:
 - RAG evaluation hit-rate@2: 100% on the seeded fixture
 - agent routing accuracy: 100% on the seeded fixture
 
-Next: Step 9 — portfolio packaging: screenshots, architecture visual, walkthrough video, narration, and Upwork portfolio publishing.
+Current: Step 9 — live screenshots and Upwork portfolio copy are complete. Next: architecture visual, walkthrough video/narration, and Upwork portfolio publishing.
