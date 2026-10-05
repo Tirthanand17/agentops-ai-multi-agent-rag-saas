@@ -9,20 +9,20 @@ router = APIRouter(prefix="/knowledge", tags=["knowledge"])
 
 
 class IngestRequest(BaseModel):
-    workspace_id: str = Field(min_length=1)
-    source_name: str = Field(min_length=1)
-    text: str = Field(min_length=1)
+    workspace_id: str = Field(min_length=1, max_length=100)
+    source_name: str = Field(min_length=1, max_length=200)
+    text: str = Field(min_length=1, max_length=100_000)
 
 
 class SearchRequest(BaseModel):
-    workspace_id: str = Field(min_length=1)
-    query: str = Field(min_length=1)
+    workspace_id: str = Field(min_length=1, max_length=100)
+    query: str = Field(min_length=1, max_length=2000)
     top_k: int = Field(default=4, ge=1, le=10)
 
 
 class AskRequest(BaseModel):
-    workspace_id: str = Field(min_length=1)
-    question: str = Field(min_length=1)
+    workspace_id: str = Field(min_length=1, max_length=100)
+    question: str = Field(min_length=1, max_length=2000)
     top_k: int = Field(default=4, ge=1, le=10)
 
 

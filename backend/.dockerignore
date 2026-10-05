@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+.env
+agentops-dev.db
+tests/

@@ -44,6 +44,43 @@ type EvalPayload = {
   tool_selection_accuracy?: number;
 };
 
+type SpeechRecognitionAlternativeLike = {
+  transcript: string;
+};
+
+type SpeechRecognitionResultLike = {
+  readonly [index: number]: SpeechRecognitionAlternativeLike;
+  length: number;
+};
+
+type SpeechRecognitionEventLike = {
+  results: ArrayLike<SpeechRecognitionResultLike>;
+};
+
+type SpeechRecognitionLike = {
+  lang: string;
+  interimResults: boolean;
+  continuous: boolean;
+  start: () => void;
+  onstart: (() => void) | null;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+};
+
+type SpeechRecognitionConstructorLike = new () => SpeechRecognitionLike;
+
+function getSpeechRecognitionConstructor() {
+  if (typeof window === "undefined") return undefined;
+
+  const voiceWindow = window as typeof window & {
+    SpeechRecognition?: SpeechRecognitionConstructorLike;
+    webkitSpeechRecognition?: SpeechRecognitionConstructorLike;
+  };
+
+  return voiceWindow.SpeechRecognition ?? voiceWindow.webkitSpeechRecognition;
+}
+
 const quickPrompts = [
   "What is the refund window?",
   "Summarize renewal risk for Acme.",
@@ -80,6 +117,10 @@ export default function AgentOpsDashboard() {
   const [sources, setSources] = useState<
     Array<{ source_id: string; source_name: string; chunks: number }>
   >([]);
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [voiceError, setVoiceError] = useState("");
 
   const pendingApproval = useMemo(
     () => run?.trace.find((step) => step.status === "awaiting_approval"),
@@ -87,6 +128,13 @@ export default function AgentOpsDashboard() {
   );
 
   useEffect(() => {
+    const capabilityTimer = window.setTimeout(() => {
+      setVoiceSupported(Boolean(getSpeechRecognitionConstructor()));
+      setSpeechSupported(
+        "speechSynthesis" in window && "SpeechSynthesisUtterance" in window,
+      );
+    }, 0);
+
     async function bootstrap() {
       try {
         const [healthResponse, ragResponse, agentResponse, sourceResponse] =
@@ -116,7 +164,56 @@ export default function AgentOpsDashboard() {
     }
 
     void bootstrap();
+
+    return () => window.clearTimeout(capabilityTimer);
   }, []);
+
+  function startVoiceCapture() {
+    setVoiceError("");
+    const Recognition = getSpeechRecognitionConstructor();
+
+    if (!Recognition) {
+      setVoiceSupported(false);
+      setVoiceError("Speech recognition is not available in this browser.");
+      return;
+    }
+
+    const recognition = new Recognition();
+    recognition.lang = navigator.language || "en-IN";
+    recognition.interimResults = false;
+    recognition.continuous = false;
+    recognition.onstart = () => setListening(true);
+    recognition.onresult = (event) => {
+      const transcript = event.results[0]?.[0]?.transcript?.trim();
+      if (transcript) {
+        setPrompt(transcript);
+      } else {
+        setVoiceError("No speech was detected. Try again.");
+      }
+    };
+    recognition.onerror = () => {
+      setVoiceError("Microphone input failed or permission was denied.");
+      setListening(false);
+    };
+    recognition.onend = () => setListening(false);
+
+    try {
+      recognition.start();
+    } catch {
+      setVoiceError("Unable to start microphone input.");
+      setListening(false);
+    }
+  }
+
+  function speakLatestResponse() {
+    if (!run?.final_response || !speechSupported) return;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(run.final_response);
+    utterance.lang = navigator.language || "en-IN";
+    utterance.rate = 0.98;
+    window.speechSynthesis.speak(utterance);
+  }
 
   async function executeAgent(value: string) {
     setRunning(true);
@@ -311,14 +408,33 @@ export default function AgentOpsDashboard() {
                     className="w-full resize-none rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-slate-200 outline-none transition focus:border-cyan-300/40"
                     placeholder="Ask AgentOps to research or take an approved action..."
                   />
-                  <button
-                    disabled={running}
-                    className="rounded-lg bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-slate-950 disabled:opacity-50"
-                  >
-                    {running ? "Running agent..." : "Run agent"}
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={startVoiceCapture}
+                      disabled={!voiceSupported || listening}
+                      className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      {listening
+                        ? "Listening..."
+                        : voiceSupported
+                          ? "Use microphone"
+                          : "Voice unavailable"}
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={running}
+                      className="rounded-lg bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-slate-950 disabled:opacity-50"
+                    >
+                      {running ? "Running agent..." : "Run agent"}
+                    </button>
+                  </div>
+                  <p className="text-xs leading-5 text-slate-500">
+                    Voice uses your browser&apos;s speech APIs and depends on browser microphone permissions.
+                  </p>
                 </form>
 
+                {voiceError && <p className="mt-4 text-sm text-amber-300">{voiceError}</p>}
                 {runError && <p className="mt-4 text-sm text-rose-300">{runError}</p>}
 
                 {run && (
@@ -341,6 +457,17 @@ export default function AgentOpsDashboard() {
                         {run.status.replace("_", " ")}
                       </span>
                     </div>
+
+                    {run.final_response && (
+                      <button
+                        type="button"
+                        onClick={speakLatestResponse}
+                        disabled={!speechSupported}
+                        className="mt-4 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        {speechSupported ? "Speak response" : "Speech output unavailable"}
+                      </button>
+                    )}
 
                     {pendingApproval && (
                       <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-amber-400/20 bg-amber-400/5 p-3">

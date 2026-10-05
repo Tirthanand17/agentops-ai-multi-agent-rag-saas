@@ -41,6 +41,14 @@ def test_agent_api_requires_and_accepts_approval() -> None:
     assert "after human approval" in updated["final_response"]
 
 
+def test_agent_request_size_is_bounded() -> None:
+    response = client.post(
+        "/api/v1/agents/run",
+        json={"workspace_id": "demo-retail", "request": "x" * 2001},
+    )
+    assert response.status_code == 422
+
+
 def test_agent_evaluation_endpoint_passes() -> None:
     response = client.get("/api/v1/evaluation/agents")
     assert response.status_code == 200

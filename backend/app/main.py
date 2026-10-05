@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
@@ -12,7 +12,7 @@ from .routes.workspaces import router as workspaces_router
 
 app = FastAPI(
     title="AgentOps AI API",
-    version="0.3.0",
+    version="0.4.0",
     description="Backend for the AgentOps AI multi-agent RAG SaaS portfolio project.",
 )
 
@@ -23,6 +23,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), geolocation=(), microphone=(self)"
+    return response
+
 
 app.include_router(health_router)
 app.include_router(workspaces_router, prefix="/api/v1")

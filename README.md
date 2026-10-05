@@ -80,22 +80,29 @@ The finished project will include:
 
 ## Current status
 
-**Step 6 — interactive frontend integration complete.**
+**Step 7 — browser voice interaction and deployment hardening complete.**
 
 Validated locally:
+- FastAPI test suite: 17 passed
 - Next.js lint: passed
 - Next.js production build: passed
 - Production npm audit: 0 vulnerabilities
-- FastAPI test suite: 15 passed
-- Browser integration: passed
-- API health indicator: live
-- RAG evaluation card: live at 100%
-- Agent routing card: live at 100%
-- Knowledge search: verified in browser
-- Agent execution trace: verified in browser
-- Write action approval gate: verified in browser
-- Approved action completion: verified in browser
+- Browser speech-to-text controls: implemented with graceful unsupported/permission fallback
+- Browser text-to-speech response control: implemented
+- API request-size validation: implemented
+- Frontend and backend baseline security headers: implemented
+- Backend readiness endpoint: implemented
+- Docker health check and Docker build-ignore files: added
+- Deployment environment templates and smoke-test guide: added
 
-The dashboard now uses the real backend APIs for RAG, agent runs, approval flow, source listing, and evaluation metrics.
+Existing integrated capabilities remain in place:
+- live API health indicator
+- RAG evaluation at 100% on the seeded demo fixture
+- agent routing evaluation at 100% on the seeded demo fixture
+- tenant-scoped knowledge search
+- agent execution traces
+- human approval gate for write actions
 
-Next: Step 7 — browser voice interaction, stronger production-readiness features, and deployment preparation.
+Docker CLI was not available on the local validation machine, so the container image build is intentionally left for Step 8 on a Docker-capable deployment environment.
+
+Next: Step 8 — deploy the backend/frontend/database path, run public smoke tests, and verify the live demo.

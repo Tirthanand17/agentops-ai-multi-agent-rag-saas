@@ -59,12 +59,16 @@
 - regression test suite
 
 ## Phase 7 — Voice
-- browser speech-to-text
-- browser text-to-speech
-- voice controls
-- graceful fallback
+Status: completed 2026-10-05
+- [x] browser speech-to-text
+- [x] browser text-to-speech
+- [x] voice controls
+- [x] graceful fallback
+- [x] baseline security headers and request-size limits
+- [x] readiness endpoint and deployment documentation
 
 ## Phase 8 — Deployment
+Status: next
 - production Docker image
 - Supabase database
 - backend deployment

@@ -10,8 +10,8 @@ router = APIRouter(prefix="/agents", tags=["agents"])
 
 
 class AgentRunRequest(BaseModel):
-    workspace_id: str = Field(min_length=1)
-    request: str = Field(min_length=1)
+    workspace_id: str = Field(min_length=1, max_length=100)
+    request: str = Field(min_length=1, max_length=2000)
 
 
 def serialize_trace(step: TraceStep) -> dict[str, object]:
