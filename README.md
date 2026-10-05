@@ -60,7 +60,7 @@ Delivery:
 ## Current demo architecture
 
 Browser / Next.js static frontend
- -> same-origin Render proxy routes
+ -> HTTPS API calls with frontend-origin CORS allowlisting
  -> FastAPI
     -> demo workspace isolation
     -> RAG pipeline + in-memory vector store
@@ -85,29 +85,33 @@ The finished project will include:
 
 ## Current status
 
-**Step 8 — zero-cost Render deployment configuration validated; live service creation pending.**
+**Step 8 — public Render deployment complete and live smoke-tested.**
 
-Deployment preparation completed:
-- root `render.yaml` defines a free FastAPI web service in Singapore and a free static Next.js site
-- static frontend uses same-origin proxy rewrites to the backend
-- static-site security headers are defined at the Render edge
+Live demo:
+- Frontend: https://agentops-ai-demo-tirthanand17.onrender.com
+- API: https://agentops-ai-api-tirthanand17.onrender.com
+- API docs: https://agentops-ai-api-tirthanand17.onrender.com/docs
+
+Deployment:
+- free Render Static Site for the Next.js frontend
+- free Render Python web service in Singapore for FastAPI
+- frontend build uses the deployed API HTTPS URL
+- backend CORS is restricted to the deployed frontend origin
 - public demo remains synthetic/stateless; no unused database is provisioned just for a technology claim
-- Git history pre-public scan found no obvious API-token/private-key patterns
+- Git history and tracked-file scans found no obvious API-token/private-key patterns
 
-Validated locally:
+Validated:
 - FastAPI test suite: 17 passed
 - focused frontend ESLint: passed
+- Next.js standalone production build: passed
 - Next.js Render/static-export build: passed
-- `frontend/out/index.html`: generated
-- Render YAML: parsed successfully with two services
-- existing production npm audit result: 0 vulnerabilities
+- production npm audit: 0 vulnerabilities
+- frontend and API live over HTTPS
+- `/health` and `/ready`: HTTP 200
+- grounded knowledge search: passed
+- renewal-risk agent trace: `knowledge_search -> customer_lookup`
+- approval-gated write workflow: correctly paused, then completed after approval
+- RAG evaluation hit-rate@2: 100% on the seeded fixture
+- agent routing accuracy: 100% on the seeded fixture
 
-Integrated capabilities include:
-- grounded tenant-scoped knowledge search
-- RAG evaluation at 100% on the seeded fixture
-- agent routing evaluation at 100% on the seeded fixture
-- structured tool execution traces
-- human approval gates for write actions
-- browser speech input and response speech output
-
-Next: create the two Render services, capture the actual live URLs, run the public smoke-test checklist, and then package screenshots/video for Upwork.
+Next: Step 9 — portfolio packaging: screenshots, architecture visual, walkthrough video, narration, and Upwork portfolio publishing.

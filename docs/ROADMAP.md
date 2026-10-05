@@ -68,18 +68,22 @@ Status: completed 2026-10-05
 - [x] readiness endpoint and deployment documentation
 
 ## Phase 8 — Deployment
-Status: in progress
+Status: completed 2026-10-05
 - [x] choose zero-cost public-demo topology
 - [x] add Render Blueprint
 - [x] validate Next.js static export
-- [x] define static-site security headers and API proxy rewrites
+- [x] define static-site security headers
 - [x] complete pre-public secret-pattern scan
 - [x] document stateless synthetic-demo behavior
-- [ ] create Render backend service
-- [ ] create Render static frontend
-- [ ] verify actual service URLs
-- [ ] run live smoke tests
-- [ ] record public demo URL
+- [x] create free Render backend service in Singapore
+- [x] create free Render static frontend
+- [x] restrict backend CORS to the deployed frontend origin
+- [x] verify actual HTTPS service URLs
+- [x] run live health, RAG, agent, and approval smoke tests
+- [x] record public demo URL
+
+Live frontend: https://agentops-ai-demo-tirthanand17.onrender.com
+Live API: https://agentops-ai-api-tirthanand17.onrender.com
 
 Persistent PostgreSQL/pgvector and real auth/RBAC are a production-hardening milestone and will only be marked complete after they are actually wired into runtime behavior.
 

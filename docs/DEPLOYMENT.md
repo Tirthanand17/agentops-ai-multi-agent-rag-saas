@@ -1,6 +1,6 @@
 # Deployment
 
-AgentOps AI is prepared for a zero-cost public portfolio deployment on Render.
+AgentOps AI is live on a zero-cost public portfolio deployment on Render.
 
 ## Chosen public-demo topology
 
@@ -23,15 +23,15 @@ Do not provision a database merely to claim PostgreSQL. Persistent PostgreSQL/pg
 
 Render Free web services can spin down after 15 minutes without inbound traffic. The next request can take about a minute while the API wakes up. The static frontend remains CDN-hosted.
 
-## Blueprint services
+## Live services
 
 ### Backend
 
-Expected service name:
+Service name:
 
 `agentops-ai-api-tirthanand17`
 
-Expected URL:
+Live URL:
 
 `https://agentops-ai-api-tirthanand17.onrender.com`
 
@@ -44,17 +44,17 @@ Runtime:
 
 ### Frontend
 
-Expected service name:
+Service name:
 
 `agentops-ai-demo-tirthanand17`
 
-Expected URL:
+Live URL:
 
 `https://agentops-ai-demo-tirthanand17.onrender.com`
 
-The frontend build sets `STATIC_EXPORT=true`. API requests use same-origin paths and Render rewrite rules proxy `/api/*`, `/health`, and `/ready` to the FastAPI service.
+The live frontend build sets `STATIC_EXPORT=true` and `NEXT_PUBLIC_API_BASE_URL=https://agentops-ai-api-tirthanand17.onrender.com`. The backend `ALLOWED_ORIGINS` setting is restricted to the deployed frontend origin.
 
-Static-site security headers are defined in `render.yaml`, because Next.js server response headers are not available in static-export mode.
+The root `render.yaml` remains a reproducible Blueprint-style deployment definition and includes an alternative same-origin rewrite topology. Static-export security headers can be applied at the Render edge because Next.js server response headers are not available in static-export mode.
 
 ## Local validation
 

@@ -1,4 +1,4 @@
-﻿# Decision Log
+# Decision Log
 
 ## 2026-10-04 — Project selection
 
@@ -9,14 +9,14 @@ Current Upwork demand repeatedly asks for production-ready combinations of Next.
 
 Voice AI remains a planned extension because many voice-specific jobs require prior live telephony deployment evidence.
 
-
 ## 2026-10-05 — Public demo deployment topology
 
 Selected Render for the public portfolio demo:
 - free static site for the Next.js frontend
 - free Python web service for FastAPI
 - Singapore API region
-- same-origin static-site rewrites to proxy API calls
+- live frontend calls the HTTPS API directly, with backend CORS restricted to the deployed frontend origin
+- the reproducible Render Blueprint also documents an alternative same-origin rewrite topology
 - synthetic in-memory demo state
 
 Reason:
