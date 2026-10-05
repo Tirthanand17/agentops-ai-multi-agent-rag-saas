@@ -93,6 +93,6 @@ Status: in progress
 - [x] Upwork portfolio title/role/description draft
 - [x] sub-60-second demo storyboard and narration script
 - [x] recruiter-friendly architecture visual
-- [ ] demo recording
-- [ ] natural narration/audio
+- [x] 50-second 1080p portfolio walkthrough
+- [x] natural English narration embedded in MP4
 - [ ] final Upwork portfolio publishing

@@ -80,10 +80,10 @@ Completed:
 - [x] automated tests and CI definition
 - [x] polished live-product screenshots
 - [x] recruiter-friendly architecture visual
+- [x] 50-second walkthrough video
+- [x] natural-tone narration/audio
 
 Remaining:
-- [ ] short walkthrough video
-- [ ] natural-tone narration/audio
 - [ ] final Upwork portfolio publishing
 
 ## Live product evidence
@@ -96,7 +96,11 @@ Remaining:
 
 Additional approved-action evidence is available in `portfolio/screenshots/04-live-approved-action.png`.
 
-Portfolio copy, the 55-second video storyboard, and the recruiter-facing architecture visual are stored in the `portfolio/` directory.\n\n![AgentOps AI architecture](portfolio/architecture/agentops-architecture.png)
+Portfolio copy, the recruiter-facing architecture visual, narration script, and the finished 50-second walkthrough video are stored in the `portfolio/` directory.
+
+[Watch the 50-second AgentOps AI walkthrough](portfolio/agentops-ai-portfolio-demo.mp4)
+
+![AgentOps AI architecture](portfolio/architecture/agentops-architecture.png)
 
 ## Current status
 
@@ -129,4 +133,4 @@ Validated:
 - RAG evaluation hit-rate@2: 100% on the seeded fixture
 - agent routing accuracy: 100% on the seeded fixture
 
-Current: Step 9 — screenshots, portfolio copy, storyboard, and architecture visual are complete. Next: walkthrough video/narration and Upwork portfolio publishing.
+Current: Step 9 — screenshots, portfolio copy, architecture visual, walkthrough video, and narration are complete. Next: final Upwork portfolio publishing.
