@@ -68,13 +68,20 @@ Status: completed 2026-10-05
 - [x] readiness endpoint and deployment documentation
 
 ## Phase 8 — Deployment
-Status: next
-- production Docker image
-- Supabase database
-- backend deployment
-- frontend deployment
-- smoke tests
-- public demo data
+Status: in progress
+- [x] choose zero-cost public-demo topology
+- [x] add Render Blueprint
+- [x] validate Next.js static export
+- [x] define static-site security headers and API proxy rewrites
+- [x] complete pre-public secret-pattern scan
+- [x] document stateless synthetic-demo behavior
+- [ ] create Render backend service
+- [ ] create Render static frontend
+- [ ] verify actual service URLs
+- [ ] run live smoke tests
+- [ ] record public demo URL
+
+Persistent PostgreSQL/pgvector and real auth/RBAC are a production-hardening milestone and will only be marked complete after they are actually wired into runtime behavior.
 
 ## Phase 9 — Portfolio packaging
 - polished screenshots

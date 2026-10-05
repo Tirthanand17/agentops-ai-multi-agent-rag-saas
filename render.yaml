@@ -1,0 +1,60 @@
+services:
+  - type: web
+    name: agentops-ai-api-tirthanand17
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /ready
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LLM_PROVIDER
+        value: demo
+      - key: PYTHON_VERSION
+        value: 3.12.11
+      - key: ALLOWED_ORIGINS
+        value: '["https://agentops-ai-demo-tirthanand17.onrender.com"]'
+    buildFilter:
+      paths:
+        - backend/**
+        - render.yaml
+
+  - type: web
+    name: agentops-ai-demo-tirthanand17
+    runtime: static
+    buildCommand: cd frontend && npm ci && STATIC_EXPORT=true npm run build
+    staticPublishPath: ./frontend/out
+    envVars:
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: NEXT_PUBLIC_STATIC_PROXY
+        value: "true"
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), geolocation=(), microphone=(self)
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://agentops-ai-api-tirthanand17.onrender.com/api/*
+      - type: rewrite
+        source: /health
+        destination: https://agentops-ai-api-tirthanand17.onrender.com/health
+      - type: rewrite
+        source: /ready
+        destination: https://agentops-ai-api-tirthanand17.onrender.com/ready
+    buildFilter:
+      paths:
+        - frontend/**
+        - render.yaml

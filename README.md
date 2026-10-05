@@ -38,32 +38,37 @@ AI:
 - retrieval and agent evaluation
 - approval safeguards for actions
 
-Data/platform:
-- Supabase Auth
-- PostgreSQL
-- pgvector
-- workspace and tenant isolation
-- audit/event log
+Current demo data/platform:
+- seeded synthetic business data
+- tenant-scoped in-memory RAG/vector store
+- workspace isolation tests
+- in-memory agent execution traces
+- no real client data or external write integrations
+
+Production target:
+- authentication and tenant-aware RBAC
+- PostgreSQL + pgvector persistence
+- durable audit/event log
 - optional Redis-compatible cache/queue
 
 Delivery:
-- Docker
-- GitHub Actions
-- Vercel frontend deployment
-- container backend deployment
-- Supabase database deployment
+- Dockerfiles and Docker Compose for local/container deployment
+- GitHub Actions CI definition
+- Render Blueprint for a free static Next.js demo + FastAPI service
+- environment templates and deployment smoke-test checklist
 
-## High-level architecture
+## Current demo architecture
 
-Browser / Next.js
- -> Auth + SSE
+Browser / Next.js static frontend
+ -> same-origin Render proxy routes
  -> FastAPI
-    -> Workspace / RBAC
-    -> RAG pipeline
-    -> Agent runtime
-    -> Business tools
-    -> Evaluation / observability
- -> PostgreSQL / pgvector
+    -> demo workspace isolation
+    -> RAG pipeline + in-memory vector store
+    -> agent runtime + structured tools
+    -> human approval gates
+    -> evaluation / execution traces
+
+Production persistence/authentication are deliberately documented as the next hardening layer rather than claimed as already implemented.
 
 ## Portfolio outcome
 
@@ -80,29 +85,29 @@ The finished project will include:
 
 ## Current status
 
-**Step 7 — browser voice interaction and deployment hardening complete.**
+**Step 8 — zero-cost Render deployment configuration validated; live service creation pending.**
+
+Deployment preparation completed:
+- root `render.yaml` defines a free FastAPI web service in Singapore and a free static Next.js site
+- static frontend uses same-origin proxy rewrites to the backend
+- static-site security headers are defined at the Render edge
+- public demo remains synthetic/stateless; no unused database is provisioned just for a technology claim
+- Git history pre-public scan found no obvious API-token/private-key patterns
 
 Validated locally:
 - FastAPI test suite: 17 passed
-- Next.js lint: passed
-- Next.js production build: passed
-- Production npm audit: 0 vulnerabilities
-- Browser speech-to-text controls: implemented with graceful unsupported/permission fallback
-- Browser text-to-speech response control: implemented
-- API request-size validation: implemented
-- Frontend and backend baseline security headers: implemented
-- Backend readiness endpoint: implemented
-- Docker health check and Docker build-ignore files: added
-- Deployment environment templates and smoke-test guide: added
+- focused frontend ESLint: passed
+- Next.js Render/static-export build: passed
+- `frontend/out/index.html`: generated
+- Render YAML: parsed successfully with two services
+- existing production npm audit result: 0 vulnerabilities
 
-Existing integrated capabilities remain in place:
-- live API health indicator
-- RAG evaluation at 100% on the seeded demo fixture
-- agent routing evaluation at 100% on the seeded demo fixture
-- tenant-scoped knowledge search
-- agent execution traces
-- human approval gate for write actions
+Integrated capabilities include:
+- grounded tenant-scoped knowledge search
+- RAG evaluation at 100% on the seeded fixture
+- agent routing evaluation at 100% on the seeded fixture
+- structured tool execution traces
+- human approval gates for write actions
+- browser speech input and response speech output
 
-Docker CLI was not available on the local validation machine, so the container image build is intentionally left for Step 8 on a Docker-capable deployment environment.
-
-Next: Step 8 — deploy the backend/frontend/database path, run public smoke tests, and verify the live demo.
+Next: create the two Render services, capture the actual live URLs, run the public smoke-test checklist, and then package screenshots/video for Upwork.

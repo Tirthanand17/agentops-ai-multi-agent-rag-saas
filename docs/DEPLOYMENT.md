@@ -1,49 +1,62 @@
-# Deployment Preparation
+# Deployment
 
-AgentOps AI is designed to deploy without paid AI credentials in demo mode.
+AgentOps AI is prepared for a zero-cost public portfolio deployment on Render.
 
-## Recommended topology
+## Chosen public-demo topology
 
-- Frontend: a Next.js-compatible host.
-- Backend: any host that can run the backend Docker image.
-- Database: PostgreSQL with pgvector when the persistent production store is enabled.
-- AI provider: keep `LLM_PROVIDER=demo` for the public portfolio demo, or supply a supported provider later.
+- Frontend: Render Static Site, built as a Next.js static export.
+- Backend: Render Free Python web service running FastAPI.
+- Region: Singapore for the API service.
+- Data: seeded synthetic in-memory demo state.
+- AI provider: `demo` mode; no paid LLM credentials are required.
+- Infrastructure definition: root `render.yaml`.
 
-No paid service should be enabled without explicit approval.
+This is intentionally a portfolio/demo deployment, not a claim of production customer usage.
 
-## Frontend environment
+## Why the demo is stateless
 
-Copy `frontend/.env.example` to the host environment and set:
+The current application does not persist agent or RAG state through the configured `DATABASE_URL`; the seeded demo stores are in memory. A free Render web service has an ephemeral filesystem and can restart after idle periods, so the public demo is designed to recreate its synthetic workspace on startup.
 
-```text
-NEXT_PUBLIC_API_BASE_URL=https://your-api.example.com
-```
+Do not provision a database merely to claim PostgreSQL. Persistent PostgreSQL/pgvector plus real authentication/RBAC should be added when those components are actually wired into the product.
 
-The URL must point to the deployed FastAPI service.
+## Free-tier behavior
 
-## Backend environment
+Render Free web services can spin down after 15 minutes without inbound traffic. The next request can take about a minute while the API wakes up. The static frontend remains CDN-hosted.
 
-Start from `backend/.env.example`.
+## Blueprint services
 
-For a public deployment, set at minimum:
+### Backend
 
-```text
-APP_ENV=production
-DATABASE_URL=postgresql+psycopg://...
-ALLOWED_ORIGINS=["https://your-frontend.example.com"]
-LLM_PROVIDER=demo
-```
+Expected service name:
 
-Never commit real database passwords, API keys, tokens, or client data.
+`agentops-ai-api-tirthanand17`
 
-## Health endpoints
+Expected URL:
 
-- `GET /health` — service liveness
-- `GET /ready` — deployment readiness
+`https://agentops-ai-api-tirthanand17.onrender.com`
 
-The backend Docker image includes a health check against `/ready`.
+Runtime:
+- Python 3.12.11
+- FastAPI / Uvicorn
+- Free compute
+- Singapore
+- health check: `/ready`
 
-## Build validation
+### Frontend
+
+Expected service name:
+
+`agentops-ai-demo-tirthanand17`
+
+Expected URL:
+
+`https://agentops-ai-demo-tirthanand17.onrender.com`
+
+The frontend build sets `STATIC_EXPORT=true`. API requests use same-origin paths and Render rewrite rules proxy `/api/*`, `/health`, and `/ready` to the FastAPI service.
+
+Static-site security headers are defined in `render.yaml`, because Next.js server response headers are not available in static-export mode.
+
+## Local validation
 
 Backend:
 
@@ -53,7 +66,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-Frontend:
+Frontend standalone mode:
 
 ```bash
 cd frontend
@@ -62,29 +75,50 @@ npm run lint
 npm run build
 ```
 
-Docker:
+Frontend Render/static-export mode:
 
 ```bash
-docker compose build
+cd frontend
+STATIC_EXPORT=true NEXT_PUBLIC_STATIC_PROXY=true npm run build
 ```
 
-## Smoke-test checklist
+A successful static build creates `frontend/out`.
 
-1. Load the frontend over HTTPS.
-2. Confirm the API status card is online.
-3. Run a grounded knowledge search.
-4. Run a read-only agent request.
-5. Trigger a write workflow and verify it stops for approval.
-6. Approve the demo write action and verify completion.
-7. Run RAG and agent evaluation cards.
-8. Test microphone capture in a supported browser after granting permission.
-9. Test spoken response output.
-10. Verify no secrets or real client data are exposed.
+## Public smoke-test checklist
 
-## Voice deployment note
+1. Open the frontend HTTPS URL.
+2. Allow for one cold start if the free API has been idle.
+3. Confirm the API status card becomes Online.
+4. Run: `What is the refund window?`
+5. Confirm a grounded knowledge-search result is returned.
+6. Run: `Summarize renewal risk for Acme.`
+7. Confirm the trace contains knowledge search + customer lookup.
+8. Run: `Escalate Acme and create a support ticket.`
+9. Verify the write step stops for explicit human approval.
+10. Approve it and verify the synthetic ticket result completes.
+11. Confirm RAG evaluation and agent-routing cards show their seeded evaluation results.
+12. Test microphone input in a supported browser after granting permission.
+13. Test spoken response output.
+14. Check `/ready` and the backend `/docs` endpoint.
+15. Verify no secrets or real client data are exposed.
 
-Browser speech recognition and text-to-speech availability varies by browser and device. The UI detects support and falls back to text controls when voice APIs are unavailable. Microphone access requires a secure context (HTTPS on public deployments, with localhost allowed during development).
+## Security and truthfulness
 
-## Production follow-ups
+- Synthetic data only.
+- No API secrets are required for demo mode.
+- No real write integration is executed.
+- Write actions are approval-gated.
+- Request sizes are bounded.
+- Frontend and backend send baseline security headers.
+- The demo does not claim persistent storage, production users, or client usage.
 
-Before using this project with real customers, replace in-memory/demo stores with persistent tenant-aware storage, add production authentication/RBAC, add rate limiting, configure structured logs/metrics, and perform a deployment-specific security review.
+## Future production hardening
+
+Before real customer use:
+- add persistent PostgreSQL/pgvector storage,
+- add real authentication and tenant-aware RBAC,
+- persist audit/trace records,
+- add rate limiting,
+- add structured application metrics/logging,
+- introduce migrations and backup/restore procedures,
+- run deployment-specific security testing.

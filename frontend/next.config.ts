@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isStaticExport = process.env.STATIC_EXPORT === "true";
+
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
@@ -10,16 +12,20 @@ const securityHeaders = [
   },
 ];
 
-const nextConfig: NextConfig = {
-  output: "standalone",
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: securityHeaders,
+const nextConfig: NextConfig = isStaticExport
+  ? {
+      output: "export",
+    }
+  : {
+      output: "standalone",
+      async headers() {
+        return [
+          {
+            source: "/(.*)",
+            headers: securityHeaders,
+          },
+        ];
       },
-    ];
-  },
-};
+    };
 
 export default nextConfig;
