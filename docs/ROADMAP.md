@@ -92,7 +92,7 @@ Status: in progress
 - [x] polished 4:3 live screenshots
 - [x] Upwork portfolio title/role/description draft
 - [x] sub-60-second demo storyboard and narration script
-- [ ] recruiter-friendly architecture visual
+- [x] recruiter-friendly architecture visual
 - [ ] demo recording
 - [ ] natural narration/audio
 - [ ] final Upwork portfolio publishing

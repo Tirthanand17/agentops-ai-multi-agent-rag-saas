@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:1400px;height:1050px;overflow:hidden;background:#07111f;color:#f8fafc;font-family:"Segoe UI",Arial,sans-serif}
+body{background:linear-gradient(135deg,#07111f 0%,#0b1422 100%);padding:54px 56px}
+.kicker{font-size:15px;font-weight:800;letter-spacing:2.2px;color:#67e8f9}
+h1{font-size:38px;line-height:1.1;margin:15px 0 9px;font-weight:800}
+.sub{font-size:17px;color:#94a3b8;margin:0}
+.top{position:relative}
+.status{position:absolute;right:0;top:3px;display:flex;gap:12px}
+.pill{border-radius:999px;padding:9px 15px;font-size:12px;font-weight:800;border:1px solid}
+.live{background:#052e2b;border-color:#14b8a6;color:#a7f3d0}
+.tests{background:#082f49;border-color:#0ea5e9;color:#bae6fd}
+.frame{margin-top:34px;border:1px solid #1e293b;border-radius:28px;background:#0b1728;padding:25px}
+.frame-title{font-size:14px;font-weight:800;letter-spacing:2px;color:#67e8f9;margin-bottom:22px}
+.flow{display:grid;grid-template-columns:250px 1fr 250px 1fr 250px;align-items:center;gap:0}
+.box{height:132px;border-radius:18px;background:#111c2e;border:1px solid #334155;padding:20px;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+.box.api{border-color:#22d3ee}
+.box h2{font-size:19px;margin:0 0 16px}
+.box p{font-size:14px;color:#94a3b8;margin:8px 0}
+.arrow{height:2px;background:#67e8f9;position:relative;margin:0 12px}
+.arrow:after{content:"";position:absolute;right:-2px;top:-5px;border-left:9px solid #67e8f9;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.arrow-label{text-align:center;font-size:11px;color:#94a3b8;margin-top:-26px}
+.section{font-size:14px;font-weight:800;letter-spacing:2px;color:#67e8f9;margin:28px 0 15px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{height:148px;border-radius:17px;background:#101b2d;border:1px solid #334155;padding:20px;position:relative}
+.card.approval{border-color:#f59e0b}
+.card h3{font-size:18px;margin:0 0 15px}
+.card p{font-size:13px;line-height:1.35;color:#94a3b8;margin:8px 0}
+.card:not(:last-child):after{content:"→";position:absolute;right:-18px;top:58px;font-size:25px;color:#67e8f9;z-index:5}
+.card.approval:after{color:#fbbf24}
+.state{display:grid;grid-template-columns:1fr 1fr 1.07fr;gap:16px}
+.state-card{height:115px;border-radius:16px;background:#0e1a2b;border:1px solid #334155;padding:18px 20px}
+.state-card h3{font-size:17px;margin:0 0 12px}
+.state-card p{font-size:13px;color:#94a3b8;margin:7px 0}
+.metrics{display:flex;align-items:baseline;gap:18px;margin-top:2px}
+.metric{font-size:25px;font-weight:800}
+.metric small{font-size:11px;color:#cbd5e1;font-weight:700}
+.note{font-size:11px!important;color:#64748b!important}
+.future{margin-top:28px;border:1px dashed #64748b;border-radius:20px;background:#0a1320;padding:17px 22px}
+.future .ftitle{font-size:13px;font-weight:800;letter-spacing:1.7px;color:#cbd5e1;margin-bottom:13px}
+.future .items{display:flex;align-items:center;gap:18px;font-size:13px;color:#94a3b8}
+.dot{width:5px;height:5px;border-radius:50%;background:#64748b}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="kicker">AGENTOPS AI · LIVE DEMO ARCHITECTURE</div>
+  <h1>Multi-Agent RAG SaaS with Human Approval</h1>
+  <p class="sub">Current deployed system — synthetic portfolio data, explicit safety gates, observable agent traces</p>
+  <div class="status"><div class="pill live">● LIVE HTTPS</div><div class="pill tests">17 TESTS PASSING</div></div>
+</div>
+
+<div class="frame">
+  <div class="frame-title">IMPLEMENTED &amp; LIVE</div>
+  <div class="flow">
+    <div class="box">
+      <h2>Web Frontend</h2>
+      <p>Static React / Next.js UI</p>
+      <p>Voice input + speech output</p>
+      <p>Trace, RAG &amp; approval views</p>
+    </div>
+    <div><div class="arrow-label">HTTPS JSON</div><div class="arrow"></div></div>
+    <div class="box api">
+      <h2>FastAPI Backend</h2>
+      <p>HTTPS API + origin CORS</p>
+      <p>Request limits + security headers</p>
+      <p>Health / readiness endpoints</p>
+    </div>
+    <div><div class="arrow-label">AGENT REQUESTS</div><div class="arrow"></div></div>
+    <div class="box">
+      <h2>Agent Runtime</h2>
+      <p>Structured tool routing</p>
+      <p>Read vs write permissions</p>
+      <p>Execution trace per run</p>
+    </div>
+  </div>
+
+  <div class="section">CORE LIVE CAPABILITIES</div>
+  <div class="cards">
+    <div class="card"><h3>Tenant-Scoped RAG</h3><p>Seeded synthetic documents</p><p>Local embedding retrieval</p><p>Source names + similarity scores</p></div>
+    <div class="card"><h3>Demo Business Tools</h3><p>Knowledge search</p><p>Customer / order lookup</p><p>Synthetic ticket creation</p></div>
+    <div class="card approval"><h3>Human Approval Gate</h3><p>Write steps pause before execution</p><p>Explicit approval required</p><p>Approval state remains in trace</p></div>
+    <div class="card"><h3>Evaluation &amp; Health</h3><p>RAG hit-rate@2 fixture</p><p>Agent routing accuracy fixture</p><p>/health + /ready</p></div>
+  </div>
+
+  <div class="section">CURRENT DEMO STATE</div>
+  <div class="state">
+    <div class="state-card"><h3>In-Memory Demo Store</h3><p>Tenant-isolated chunks + vectors</p><p>Agent runs + traces reset on restart</p></div>
+    <div class="state-card"><h3>Synthetic Workspace</h3><p>3 indexed knowledge sources</p><p>Synthetic CRM / ticket data only</p></div>
+    <div class="state-card">
+      <h3>Seeded Evaluation Evidence</h3>
+      <div class="metrics"><div class="metric">100% <small>RAG hit-rate@2</small></div><div class="metric">100% <small>routing</small></div></div>
+      <p class="note">Fixture results — not production-accuracy claims</p>
+    </div>
+  </div>
+</div>
+
+<div class="future">
+  <div class="ftitle">FUTURE PRODUCTION HARDENING · NOT CLAIMED AS IMPLEMENTED</div>
+  <div class="items"><span>Authentication + tenant RBAC</span><span class="dot"></span><span>PostgreSQL + pgvector persistence</span><span class="dot"></span><span>Durable audit log + rate limiting</span><span class="dot"></span><span>Structured metrics + backups</span></div>
+</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿# AgentOps AI
+# AgentOps AI
 
 **Multi-Agent RAG SaaS for Business Operations**
 
@@ -79,9 +79,9 @@ Completed:
 - [x] architecture documentation
 - [x] automated tests and CI definition
 - [x] polished live-product screenshots
+- [x] recruiter-friendly architecture visual
 
 Remaining:
-- [ ] recruiter-friendly architecture visual
 - [ ] short walkthrough video
 - [ ] natural-tone narration/audio
 - [ ] final Upwork portfolio publishing
@@ -96,7 +96,7 @@ Remaining:
 
 Additional approved-action evidence is available in `portfolio/screenshots/04-live-approved-action.png`.
 
-Portfolio copy and the video storyboard are stored in the `portfolio/` directory.
+Portfolio copy, the 55-second video storyboard, and the recruiter-facing architecture visual are stored in the `portfolio/` directory.\n\n![AgentOps AI architecture](portfolio/architecture/agentops-architecture.png)
 
 ## Current status
 
@@ -129,4 +129,4 @@ Validated:
 - RAG evaluation hit-rate@2: 100% on the seeded fixture
 - agent routing accuracy: 100% on the seeded fixture
 
-Current: Step 9 — live screenshots and Upwork portfolio copy are complete. Next: architecture visual, walkthrough video/narration, and Upwork portfolio publishing.
+Current: Step 9 — screenshots, portfolio copy, storyboard, and architecture visual are complete. Next: walkthrough video/narration and Upwork portfolio publishing.
