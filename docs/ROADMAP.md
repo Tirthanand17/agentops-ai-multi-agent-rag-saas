@@ -88,11 +88,11 @@ Live API: https://agentops-ai-api-tirthanand17.onrender.com
 Persistent PostgreSQL/pgvector and real auth/RBAC are a production-hardening milestone and will only be marked complete after they are actually wired into runtime behavior.
 
 ## Phase 9 — Portfolio packaging
-Status: in progress
+Status: completed 2026-10-05
 - [x] polished 4:3 live screenshots
-- [x] Upwork portfolio title/role/description draft
+- [x] Upwork portfolio title/role/description
 - [x] sub-60-second demo storyboard and narration script
 - [x] recruiter-friendly architecture visual
 - [x] 50-second 1080p portfolio walkthrough
 - [x] natural English narration embedded in MP4
-- [ ] final Upwork portfolio publishing
+- [x] AgentOps AI portfolio item published on Upwork

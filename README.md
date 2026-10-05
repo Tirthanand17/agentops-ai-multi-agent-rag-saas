@@ -82,9 +82,7 @@ Completed:
 - [x] recruiter-friendly architecture visual
 - [x] 50-second walkthrough video
 - [x] natural-tone narration/audio
-
-Remaining:
-- [ ] final Upwork portfolio publishing
+- [x] Upwork portfolio item published
 
 ## Live product evidence
 
@@ -104,7 +102,7 @@ Portfolio copy, the recruiter-facing architecture visual, narration script, and 
 
 ## Current status
 
-**Step 9 — portfolio packaging in progress; deployment remains live and smoke-tested.**
+**Step 9 — portfolio packaging and Upwork publishing complete; deployment remains live and smoke-tested.**
 
 Live demo:
 - Frontend: https://agentops-ai-demo-tirthanand17.onrender.com
@@ -133,4 +131,4 @@ Validated:
 - RAG evaluation hit-rate@2: 100% on the seeded fixture
 - agent routing accuracy: 100% on the seeded fixture
 
-Current: Step 9 — screenshots, portfolio copy, architecture visual, walkthrough video, and narration are complete. Next: final Upwork portfolio publishing.
+Current: Step 9 complete — screenshots, portfolio copy, architecture visual, walkthrough video, narration, and Upwork portfolio publishing are finished.
